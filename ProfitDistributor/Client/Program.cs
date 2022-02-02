@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProfitDistributor.Client
+namespace ProfitDistributor.Ui
 {
     public class Program
     {

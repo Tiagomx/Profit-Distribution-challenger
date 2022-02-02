@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfitDistributor.Server", "ProfitDistributor\Server\ProfitDistributor.Server.csproj", "{7C992E05-FC23-450B-B77A-86C3ECF05424}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitDistributor.Server", "ProfitDistributor\Server\ProfitDistributor.Server.csproj", "{7C992E05-FC23-450B-B77A-86C3ECF05424}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfitDistributor.Client", "ProfitDistributor\Client\ProfitDistributor.Client.csproj", "{F6E53084-6BFA-4B7C-A75B-6B878C532587}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitDistributor.Ui", "ProfitDistributor\Client\ProfitDistributor.Ui.csproj", "{F6E53084-6BFA-4B7C-A75B-6B878C532587}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfitDistributor.Shared", "ProfitDistributor\Shared\ProfitDistributor.Shared.csproj", "{68285944-C68C-4EE2-BE2D-5ACF472336C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitDistributor.Shared", "ProfitDistributor\Shared\ProfitDistributor.Shared.csproj", "{68285944-C68C-4EE2-BE2D-5ACF472336C0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.0 - Presentation", "1.0 - Presentation", "{F0EB5DC7-27AA-4114-988C-FC25640EB927}"
 EndProject

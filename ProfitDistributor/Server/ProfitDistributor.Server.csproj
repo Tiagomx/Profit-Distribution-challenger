@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\ProfitDistributor.Client.csproj" />
+    <ProjectReference Include="..\Client\ProfitDistributor.Ui.csproj" />
     <ProjectReference Include="..\Shared\ProfitDistributor.Shared.csproj" />
   </ItemGroup>
 
