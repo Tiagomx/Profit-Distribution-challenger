@@ -1,25 +1,25 @@
 ﻿using Google.Cloud.Firestore;
 using Newtonsoft.Json;
+using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Domain.Intefaces;
-using ProfitDistributorTool.Domain.Entities;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProfitDistributor.Server.Data
+namespace ProfitDistributor.Application.Data
 {
-    public class FuncionarioService : IFuncionarioService
+    public class FireStoreService : IFuncionarioService
     {
         private string projectId;
         private FirestoreDb fireStoreDb;
 
-        public FuncionarioService()
+        public FireStoreService()
         {
-            string filepath = @"C:\Users\tiago.teixeira\Downloads\Blazor_Firestorer\Blazor_Firestorer\Server\FirestoreApiKey\blazorcrudfirestore-1565827c5156.json";
+            string filepath = @"C:\Users\tiago.teixeira\source\repos\ProfitDistributor\ProfitDistributor\Application\FireStoreKey\profitapp-34fab-8d750f4e4856.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
-            projectId = "blazorcrudfirestore";
+            projectId = "profitapp-34fab";
             fireStoreDb = FirestoreDb.Create(projectId);
         }
 
@@ -27,7 +27,7 @@ namespace ProfitDistributor.Server.Data
         {
             try
             {
-                Query FuncionarioQuery = fireStoreDb.Collection("Funcionarios");
+                Query FuncionarioQuery = fireStoreDb.Collection("funcionarios");
                 QuerySnapshot FuncionarioQuerySnapshot = await FuncionarioQuery.GetSnapshotAsync();
                 List<Funcionario> listaFuncionario = new List<Funcionario>();
 
@@ -57,7 +57,7 @@ namespace ProfitDistributor.Server.Data
         {
             try
             {
-                DocumentReference docRef = fireStoreDb.Collection("Funcionarios").Document(id);
+                DocumentReference docRef = fireStoreDb.Collection("funcionarios").Document(id);
                 DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
                 if (snapshot.Exists)
@@ -81,7 +81,7 @@ namespace ProfitDistributor.Server.Data
         {
             try
             {
-                CollectionReference colRef = fireStoreDb.Collection("Funcionarios");
+                CollectionReference colRef = fireStoreDb.Collection("funcionarios");
                 await colRef.AddAsync(Funcionario);
             }
             catch
@@ -94,7 +94,7 @@ namespace ProfitDistributor.Server.Data
         {
             try
             {
-                DocumentReference FuncionarioRef = fireStoreDb.Collection("Funcionarios").Document(Funcionario.Id);
+                DocumentReference FuncionarioRef = fireStoreDb.Collection("funcionarios").Document(Funcionario.Id);
                 await FuncionarioRef.SetAsync(Funcionario, SetOptions.Overwrite);
             }
             catch
@@ -107,7 +107,7 @@ namespace ProfitDistributor.Server.Data
         {
             try
             {
-                DocumentReference FuncionarioRef = fireStoreDb.Collection("Funcionarios").Document(id);
+                DocumentReference FuncionarioRef = fireStoreDb.Collection("funcionarios").Document(id);
                 await FuncionarioRef.DeleteAsync();
             }
             catch
@@ -120,7 +120,7 @@ namespace ProfitDistributor.Server.Data
         {
             try
             {
-                Query CargosQuery = fireStoreDb.Collection("Cargos");
+                Query CargosQuery = fireStoreDb.Collection("cargo");
                 QuerySnapshot CargosQuerySnapshot = await CargosQuery.GetSnapshotAsync();
                 List<Cargo> listaCargos = new List<Cargo>();
 
@@ -128,10 +128,10 @@ namespace ProfitDistributor.Server.Data
                 {
                     if (documentSnapshot.Exists)
                     {
-                        Dictionary<string, object> city = documentSnapshot.ToDictionary();
-                        string json = JsonConvert.SerializeObject(city);
-                        Cargo novaCargo = JsonConvert.DeserializeObject<Cargo>(json);
-                        listaCargos.Add(novaCargo);
+                        Dictionary<string, object> cargo = documentSnapshot.ToDictionary();
+                        string json = JsonConvert.SerializeObject(cargo);
+                        Cargo novoCargo = JsonConvert.DeserializeObject<Cargo>(json);
+                        listaCargos.Add(novoCargo);
                     }
                 }
                 return listaCargos;

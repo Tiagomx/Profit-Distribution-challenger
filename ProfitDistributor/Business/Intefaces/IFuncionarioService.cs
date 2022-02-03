@@ -1,4 +1,4 @@
-﻿using ProfitDistributorTool.Domain.Entities;
+﻿using ProfitDistributor.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -6,10 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProfitDistributor.Domain.Intefaces;
-using ProfitDistributor.Server.Data;
+using ProfitDistributor.Application.Data;
 using System.Linq;
 
-namespace ProfitDistributor.Server
+namespace ProfitDistributor.Application
 {
     public class Startup
     {
@@ -24,7 +24,7 @@ namespace ProfitDistributor.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IFuncionarioService, FuncionarioService>();
+            services.AddTransient<IFuncionarioService, FireStoreService>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

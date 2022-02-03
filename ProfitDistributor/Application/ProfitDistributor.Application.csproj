@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>ProfitDistributor.Application</AssemblyName>
+    <RootNamespace>ProfitDistributor.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <ProjectReference Include="..\Business\ProfitDistributor.Domain.csproj" />
+    <ProjectReference Include="..\Presentation\ProfitDistributor.Ui.csproj" />
+  </ItemGroup>
+
+
+</Project>

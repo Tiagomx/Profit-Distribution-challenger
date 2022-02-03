@@ -1,6 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 
-namespace ProfitDistributorTool.Domain.Entities
+namespace ProfitDistributor.Domain.Entities
 {
     [FirestoreData]
     public class Funcionario

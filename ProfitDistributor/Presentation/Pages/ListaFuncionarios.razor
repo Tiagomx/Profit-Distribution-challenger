@@ -1,0 +1,245 @@
+﻿@page "/Funcionarios"
+@inject HttpClient _httpClient
+
+<h1>Funcionarios</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-3">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#AddEditFuncionariosModal" @onclick="@AddFuncionarios">
+                <i class="fa fa-user-plus"></i>
+               
+            </button>
+        </div>
+
+        <div class="input-group col-md-4 offset-md-5">
+            <input type="text" class="form-control" placeholder="Procurar Funcionarios" @bind="@searchString" />
+            <div class="input-group-append">
+                <button class="btn btn-info" @onclick="@SearchFuncionarios">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+@if (Funcionarios == null)
+{
+    <p><em>Carregando...</em></p>
+}
+else
+{
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Matricula</th>
+                <th>Nome</th>
+                <th>Area</th>
+                <th>Cargo</th>
+                <th>SalarioBruto</th>
+                <th>DataAdmissao</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Funcionarios in Funcionarios)
+            {
+                <tr>
+                    <td>@Funcionarios.Matricula</td>
+                    <td>@Funcionarios.Nome</td>
+                    <td>@Funcionarios.Area</td>
+                    <td>@Funcionarios.Cargo</td>
+                    <td>@Funcionarios.SalarioBruto</td>
+                    <td>@Funcionarios.DataAdmissao</td>
+
+                    <td>
+                        <button class="btn btn-outline-dark" data-toggle="modal" data-target="#AddEditFuncionariosModal"
+                                @onclick="@(async () => await EditFuncionarios(@Funcionarios.Id))">
+                            <i class="fa fa-pencil-square-o"></i>
+                            
+                        </button>
+                        <button class="btn btn-outline-danger" data-toggle="modal" data-target="#DeleteFuncionariosModal"
+                                @onclick="@(async () => await DeleteConfirma(@Funcionarios.Id))">
+                            <i class="fa fa-trash-o"></i>
+                            
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="modal fade" id="AddEditFuncionariosModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">@tituloModal</h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="control-label">Nome</label>
+                        <input class="form-control" @bind="@Funcionario.Nome" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Matricula</label>
+                        <input class="form-control" @bind="@Funcionario.Matricula" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Área</label>
+                        <select class="form-control" @bind="@Funcionario.Area">
+                            <option value="">-- Área --</option>
+                            <option value="Diretoria">Diretoria</option>
+                            <option value="Contabilidade">Contabilidade</option>
+                            <option value="Financeiro">Financeiro</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Tecnologia">Serviços Gerais</option>
+                            <option value="Tecnologia">Relacionamento com o Cliente</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Salário Bruto</label>
+                        <input class="form-control" @bind="@Funcionario.SalarioBruto" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Cargo</label>
+                        <select class="form-control" @bind="@Funcionario.Cargo">
+                            <option value="-- Cargo --">-- Cargo --</option>
+                            @foreach (var Cargo in Cargos)
+                            {
+                                <option value="@Cargo.NomeCargo">@Cargo.NomeCargo</option>
+
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Data de Admissão</label>
+                        <input class="form-control" @bind="@Funcionario.DataAdmissao" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-block btn-success"
+                        @onclick="@(async () => await SaveFuncionarios())" data-dismiss="modal">
+                    Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@*------------------Deletar Funcionarios -------------------*@
+<div class="modal fade" id="DeleteFuncionariosModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirmar Exclusão !!!</h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tr>
+                        <td>Nome</td>
+                        <td>@Funcionario.Matricula</td>
+                    </tr>
+                    <tr>
+                        <td>Sexo</td>
+                        <td>@Funcionario.Nome</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>@Funcionario.Area</td>
+                    </tr>
+                    <tr>
+                        <td>Cargo</td>
+                        <td>@Funcionario.Cargo</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal"
+                        @onclick="@(async () => await DeleteFuncionarios(@Funcionario.Id))">
+                    Deletar
+                </button>
+                <button data-dismiss="modal" class="btn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*------------fim-----------------*@
+@code{
+    protected List<Funcionario> Funcionarios = new List<Funcionario>();
+    protected List<Cargo> Cargos = new List<Cargo>();
+    protected Funcionario Funcionario = new Funcionario();
+
+    protected string tituloModal { get; set; }
+    protected string searchString { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await GetListaFuncionarios();
+        await GetListaCargos();
+    }
+
+    protected async Task<List<Funcionario>> GetListaFuncionarios()
+    {
+        Funcionarios = await _httpClient.GetFromJsonAsync<List<Funcionario>>("api/Funcionarios");
+        return Funcionarios;
+    }
+    protected async Task GetListaCargos()
+    {
+        Cargos = await _httpClient.GetFromJsonAsync<List<Cargo>>("api/Funcionarios/GetCargos");
+    }
+
+    protected void AddFuncionarios()
+    {
+        Funcionario = new Funcionario();
+        tituloModal = "Incluir Funcionarios";
+    }
+
+    protected async Task SearchFuncionarios()
+    {
+        await GetListaFuncionarios();
+
+        if (searchString != "")
+        {
+            Funcionarios = Funcionarios.Where(
+            x => x.Nome.IndexOf(searchString,
+            StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+    }
+    protected async Task EditFuncionarios(string FuncionariosId)
+    {
+        Funcionario = await _httpClient.GetFromJsonAsync<Funcionario>("/api/Funcionarios/" + FuncionariosId);
+        tituloModal = "Editar Funcionarios";
+    }
+    protected async Task SaveFuncionarios()
+    {
+        if (Funcionario.Id != null)
+        {
+            await _httpClient.PutAsJsonAsync("api/Funcionarios/", Funcionario);
+        }
+        else
+        {
+            await _httpClient.PostAsJsonAsync("/api/Funcionarios/", Funcionario);
+        }
+        await GetListaFuncionarios();
+    }
+    protected async Task DeleteConfirma(string FuncionariosId)
+    {
+        Funcionario = await _httpClient.GetFromJsonAsync<Funcionario>("/api/Funcionarios/" + FuncionariosId);
+    }
+    protected async Task DeleteFuncionarios(string FuncionariosId)
+    {
+        Console.WriteLine(FuncionariosId);
+        await _httpClient.DeleteAsync("api/Funcionarios/" + FuncionariosId);
+        await GetListaFuncionarios();
+    }
+}
