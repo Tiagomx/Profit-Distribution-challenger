@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>ProfitDistributor.Application</AssemblyName>
-    <RootNamespace>ProfitDistributor.Application</RootNamespace>
+    <AssemblyName>ProfitDistributor.Presentation</AssemblyName>
+    <RootNamespace>ProfitDistributor.Presentation</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,8 +13,6 @@
   <ItemGroup>
 
     <ProjectReference Include="..\Business\ProfitDistributor.Domain.csproj" />
-
-    <ProjectReference Include="..\Presentation\ProfitDistributor.Ui.csproj" />
   </ItemGroup>
 
 
