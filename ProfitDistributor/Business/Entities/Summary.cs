@@ -6,7 +6,7 @@ namespace ProfitDistributor.Domain.Entities
     public partial class Summary
     {
         [JsonProperty("participacoes")]
-        public List<EmployeeDistribution> Distributions { get; set; }
+        public List<DistribuicaoDeValores> Distributions { get; set; }
 
         [JsonProperty("total_de_funcionarios")]
         public string TotalEmployees { get; set; }

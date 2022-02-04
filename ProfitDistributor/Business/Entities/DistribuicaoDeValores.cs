@@ -2,15 +2,15 @@ using Newtonsoft.Json;
 
 namespace ProfitDistributor.Domain.Entities
 {
-    public partial class EmployeeDistribution
+    public partial class DistribuicaoDeValores
     {
         [JsonProperty("matricula")]
-        public string RegistrationId { get; set; }
+        public string Matricula { get; set; }
 
         [JsonProperty("nome")]
-        public string Name { get; set; }
+        public string Nome { get; set; }
 
         [JsonProperty("valor_da_participacao")]
-        public string DistributionAmount { get; set; }
+        public string ValorParticipacao { get; set; }
     }
 }

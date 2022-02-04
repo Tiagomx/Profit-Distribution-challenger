@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProfitDistributor.Domain.Entities;
-using ProfitDistributor.Domain.Intefaces;
+using ProfitDistributor.Services.Interfaces;
 
-namespace ProfitDistributor.Application.Controllers
+namespace ProfitDistributor.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

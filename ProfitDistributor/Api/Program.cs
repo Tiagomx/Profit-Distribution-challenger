@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProfitDistributor.Application
+namespace ProfitDistributor.Api
 {
     public class Program
     {

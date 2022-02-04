@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProfitDistributor.Domain.Intefaces;
+
 using ProfitDistributor.Application.Data;
+using ProfitDistributor.Services.Interfaces;
 using System.Linq;
 
-namespace ProfitDistributor.Application
+namespace ProfitDistributor.Api
 {
     public class Startup
     {

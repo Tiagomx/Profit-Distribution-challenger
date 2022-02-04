@@ -1,8 +1,8 @@
 ﻿using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 using ProfitDistributor.Domain.Entities;
-using ProfitDistributor.Domain.Intefaces;
 
+using ProfitDistributor.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace ProfitDistributor.Application.Data
 
         public FireStoreService()
         {
-            string filepath = @"C:\Users\tiago.teixeira\source\repos\ProfitDistributor\ProfitDistributor\Application\FireStoreKey\profitapp-34fab-8d750f4e4856.json";
+            string filepath = @"C:\Users\tiago.teixeira\source\repos\ProfitDistributor\ProfitDistributor\Api\FireStoreKey\profitapp-34fab-8d750f4e4856.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
             projectId = "profitapp-34fab";
             fireStoreDb = FirestoreDb.Create(projectId);

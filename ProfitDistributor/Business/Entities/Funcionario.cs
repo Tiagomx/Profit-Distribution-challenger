@@ -24,6 +24,6 @@ namespace ProfitDistributor.Domain.Entities
         public string SalarioBruto { get; set; }
 
         [FirestoreProperty]
-        public DateTime DataAdmissao { get; set; }
+        public string DataAdmissao { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ProfitDistributor.Domain.Intefaces
+namespace ProfitDistributor.Services.Interfaces
 {
     public interface IFuncionarioService
     {
