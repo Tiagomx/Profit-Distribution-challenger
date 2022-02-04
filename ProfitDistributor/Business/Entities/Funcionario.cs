@@ -1,4 +1,5 @@
 ﻿using Google.Cloud.Firestore;
+using System;
 
 namespace ProfitDistributor.Domain.Entities
 {
@@ -23,6 +24,6 @@ namespace ProfitDistributor.Domain.Entities
         public string SalarioBruto { get; set; }
 
         [FirestoreProperty]
-        public string DataAdmissao { get; set; }
+        public DateTime DataAdmissao { get; set; }
     }
 }

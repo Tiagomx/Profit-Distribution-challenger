@@ -8,12 +8,11 @@
         <div class="col-xs-3">
             <button class="btn btn-primary" data-toggle="modal" data-target="#AddEditFuncionariosModal" @onclick="@AddFuncionarios">
                 <i class="fa fa-user-plus"></i>
-               
             </button>
         </div>
 
-        <div class="input-group col-md-4 offset-md-5">
-            <input type="text" class="form-control" placeholder="Procurar Funcionarios" @bind="@searchString" />
+        <div class="input-group col-md-3 offset-md-5">
+            <input type="text" class="form-control" placeholder="Search" @bind="@searchString" />
             <div class="input-group-append">
                 <button class="btn btn-info" @onclick="@SearchFuncionarios">
                     <i class="fa fa-search"></i>
@@ -35,10 +34,10 @@ else
             <tr>
                 <th>Matricula</th>
                 <th>Nome</th>
-                <th>Area</th>
+                <th>Área</th>
                 <th>Cargo</th>
-                <th>SalarioBruto</th>
-                <th>DataAdmissao</th>
+                <th>Salário</th>
+                <th>Admissão</th>
                 <th></th>
             </tr>
         </thead>
@@ -57,12 +56,10 @@ else
                         <button class="btn btn-outline-dark" data-toggle="modal" data-target="#AddEditFuncionariosModal"
                                 @onclick="@(async () => await EditFuncionarios(@Funcionarios.Id))">
                             <i class="fa fa-pencil-square-o"></i>
-                            
                         </button>
                         <button class="btn btn-outline-danger" data-toggle="modal" data-target="#DeleteFuncionariosModal"
                                 @onclick="@(async () => await DeleteConfirma(@Funcionarios.Id))">
                             <i class="fa fa-trash-o"></i>
-                            
                         </button>
                     </td>
                 </tr>
@@ -119,7 +116,8 @@ else
                     </div>
                     <div class="form-group">
                         <label class="control-label">Data de Admissão</label>
-                        <input class="form-control" @bind="@Funcionario.DataAdmissao" />
+                        <input type="date" class="control-label" @bind="@Funcionario.DataAdmissao" />
+                        @*<InputDate @bind-Value="@Funcionario.DataAdmissao" />*@
                     </div>
                 </form>
             </div>
