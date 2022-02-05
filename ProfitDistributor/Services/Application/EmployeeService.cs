@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Services.Base;
 using ProfitDistributor.Services.Interfaces;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;

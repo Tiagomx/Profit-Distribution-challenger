@@ -1,5 +1,4 @@
 ﻿using Google.Cloud.Firestore;
-using Newtonsoft.Json;
 
 namespace ProfitDistributor.Domain.Entities
 {

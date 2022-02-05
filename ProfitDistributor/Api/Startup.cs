@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProfitDistributor.Services.Application;
-using ProfitDistributor.Services.Interfaces;
+using ProfitDistributor.API.Configurations;
 
 namespace ProfitDistributor.Api
 {
@@ -21,7 +20,8 @@ namespace ProfitDistributor.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddDependencyInjectionConfiguration();
+            services.AddSwaggerConfig();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -44,14 +44,14 @@ namespace ProfitDistributor.Api
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
-
+            app.UseSwaggerConfig();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
-                endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
             });
         }
     }

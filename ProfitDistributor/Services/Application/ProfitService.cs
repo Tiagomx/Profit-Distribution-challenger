@@ -1,15 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Mvc;
-
 using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Domain.Utils;
-using ProfitDistributor.Services.Base;
 using ProfitDistributor.Services.Interfaces;
-using ProfitDistritor.Services.Mappers;
 
 namespace ProfitDistributor.Services.Application
 {
