@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Domain.Utils;
+using ProfitDistributor.Services.Interfaces;
 
 namespace ProfitDistritor.Services.Mappers
 {

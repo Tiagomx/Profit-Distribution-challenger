@@ -1,13 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using Google.Cloud.Firestore;
+using Newtonsoft.Json;
 
-namespace ProfitDistribution.Domain.Models.Profit
+namespace ProfitDistributor.Domain.Entities
 {
     public class PAAModel
     {
-        [JsonProperty("area")]
+        public string Id { get; set; }
+
+        [FirestoreProperty]
         public string Area { get; set; }
 
-        [JsonProperty("peso")]
+        [FirestoreProperty]
         public decimal Weight { get; set; }
     }
 }

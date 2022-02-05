@@ -1,53 +1,18 @@
 ﻿using Google.Cloud.Firestore;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ProfitDistributor.Domain.Entities;
-using ProfitDistributor.Domain.Utils;
+using ProfitDistributor.Services.Base;
 using ProfitDistributor.Services.Interfaces;
-using ProfitDistributorHelper.Services.Repositories;
-using ProfitDistritor.Services.Mappers;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProfitDistributor.Application.Data
+namespace ProfitDistributor.Services.Application
 {
-    public class FireStoreService : IEmployeeService
+    public class EmployeeService : FireStoreServiceBase, IEmployeeService
     {
-        private string projectId;
-        private FirestoreDb fireStoreDb;
-
-        private const string ERROR_BALANCE = "Saldo insuficiente para distribuição";
-
-        //private readonly IDatabaseEmployees databaseEmployees;
-        private readonly IProfitCalculations profitCalculations;
-
-        private readonly IObjectMappers objectMappers;
-
-        public FireStoreService()
-        {
-            string filepath = @"C:\Users\tiago.teixeira\source\repos\ProfitDistributor\ProfitDistributor\Api\FireStoreKey\profitapp-34fab-8d750f4e4856.json";
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
-            projectId = "profitapp-34fab";
-            fireStoreDb = FirestoreDb.Create(projectId);
-        }
-
-        public async Task<ActionResult<Summary>> GetSummaryForProfitDistributionAsync(decimal totalAmount)
-        {
-            var employees = await GetEmployeesAsync();
-            List<EmployeeDistribution> employeeDistributions = await profitCalculations.DistributeProfitForEmployeesAsync(employees.ToList());
-            decimal totalDistributed = employeeDistributions.Sum(emp => CurrencyFormatMoneyUtils.SetDecimalFromString(emp.DistributionAmount));
-            decimal distributionAmountBalance = decimal.Subtract(totalAmount, totalDistributed);
-
-            if (IsNegative(distributionAmountBalance))
-            {
-                return new BadRequestObjectResult(ERROR_BALANCE);
-            }
-
-            return objectMappers.MapResultToSummary(employeeDistributions, employees.Count.ToString(), totalAmount, totalDistributed, distributionAmountBalance);
-        }
-
         public async Task<List<Employee>> GetEmployeesAsync()
         {
             try
@@ -139,11 +104,6 @@ namespace ProfitDistributor.Application.Data
             {
                 throw;
             }
-        }
-
-        private bool IsNegative(decimal distributionAmountBalance)
-        {
-            return distributionAmountBalance.CompareTo(decimal.Zero) < decimal.Zero;
         }
     }
 }

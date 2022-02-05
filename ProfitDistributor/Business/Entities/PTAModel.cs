@@ -1,17 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using Google.Cloud.Firestore;
+using Newtonsoft.Json;
 
-namespace ProfitDistribution.Domain.Models.Profit
+namespace ProfitDistributor.Domain.Entities
 {
     public class PTAModel
     {
-        [JsonProperty("minAnos")]
+        public string Id { get; set; }
+
+        [FirestoreProperty]
         public int? MinYears { get; set; }
 
-        [JsonProperty("maxAnos")]
+        [FirestoreProperty]
         public int? MaxYears { get; set; }
 
-        [JsonProperty("peso")]
+        [FirestoreProperty]
         public decimal Weight { get; set; }
-
     }
 }

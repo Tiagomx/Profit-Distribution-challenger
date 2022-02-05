@@ -2,7 +2,7 @@
 
 using ProfitDistributor.Domain.Entities;
 
-namespace ProfitDistritor.Services.Mappers
+namespace ProfitDistributor.Services.Interfaces
 {
     public interface IObjectMappers
     {

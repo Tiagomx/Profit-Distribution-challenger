@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.0 - Presentation", "1.0 -
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0 - Application", "2.0 - Application", "{952BA245-1AD8-43D3-8D42-B4F11485D293}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.0 - Business", "4.0 - Business", "{6BD1D764-DBAD-4DD1-81A8-AFF6C820DC11}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.0 - Domain", "4.0 - Domain", "{6BD1D764-DBAD-4DD1-81A8-AFF6C820DC11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitDistributor.Domain", "ProfitDistributor\Business\ProfitDistributor.Domain.csproj", "{F7C529FA-4ECC-4926-BF23-0142D17CB2A5}"
 EndProject

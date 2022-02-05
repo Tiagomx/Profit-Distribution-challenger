@@ -1,40 +1,38 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
+
 using System.Threading.Tasks;
-using Firebase.Database;
+
 using Microsoft.AspNetCore.Mvc;
 
 using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Domain.Utils;
+using ProfitDistributor.Services.Base;
 using ProfitDistributor.Services.Interfaces;
-
-using ProfitDistributorHelper.Services.Repositories;
-
 using ProfitDistritor.Services.Mappers;
 
-namespace ProfitDistributorHelper.Services.Application
+namespace ProfitDistributor.Services.Application
 {
     public class ProfitService : IProfitService
     {
         private const string ERROR_BALANCE = "Saldo insuficiente para distribuição";
-        private readonly IDatabaseFuncionarios databaseEmployees;
+        private readonly IEmployeeService employeeService;
         private readonly IProfitCalculations profitCalculations;
         private readonly IObjectMappers objectMappers;
 
         public object MoneyUtils { get; private set; }
 
         // Performing Dependency Injection
-        public ProfitService(IDatabaseFuncionarios database, IObjectMappers mappers, IProfitCalculations profitCalcs)
+        public ProfitService(IEmployeeService database, IObjectMappers mappers, IProfitCalculations profitCalcs)
         {
-            databaseEmployees = database;
+            employeeService = database;
             objectMappers = mappers;
             profitCalculations = profitCalcs;
         }
 
         public async Task<ActionResult<Summary>> GetSummaryForProfitDistributionAsync(decimal totalAmount)
         {
-            var employees = await GetEmployeesAsync();
+            var employees = await employeeService.GetEmployeesAsync();
             List<EmployeeDistribution> employeeDistributions = await profitCalculations.DistributeProfitForEmployeesAsync(employees.ToList());
             decimal totalDistributed = employeeDistributions.Sum(emp => CurrencyFormatMoneyUtils.SetDecimalFromString(emp.DistributionAmount));
             decimal distributionAmountBalance = decimal.Subtract(totalAmount, totalDistributed);
@@ -49,12 +47,7 @@ namespace ProfitDistributorHelper.Services.Application
 
         public async Task<List<Employee>> GetEmployeesAsync()
         {
-            return await databaseEmployees.FetchAllFuncionariosAsync();
-        }
-
-        public async Task<HttpResponseMessage> PostEmployeesAsync(Employee employee)
-        {
-            return await databaseEmployees.PostToFireBaseEmployeesAsync(employee);
+            return await employeeService.GetEmployeesAsync();
         }
 
         private bool IsNegative(decimal distributionAmountBalance)

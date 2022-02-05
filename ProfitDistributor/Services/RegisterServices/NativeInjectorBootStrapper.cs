@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ProfitDistributor.Services.Application;
 using ProfitDistributor.Services.Business;
 using ProfitDistributor.Services.Interfaces;
-using ProfitDistributorHelper.Services.Application;
-using ProfitDistributorHelper.Services.Repositories;
+using ProfitDistributor.Services.Repositories;
 using ProfitDistritor.Services.Mappers;
 
 namespace ProfitDistributorHelper.Services.RegisterServices
@@ -15,8 +15,8 @@ namespace ProfitDistributorHelper.Services.RegisterServices
         /// <param name="services"></param>
         public static void RegisterServices(IServiceCollection services)
         {
-            services.AddSingleton<IDatabaseFuncionarios, DatabaseFuncionarios>();
-            services.AddSingleton<IDatabasePeso, DatabasePeso>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
+            services.AddSingleton<IDatabaseWeights, DatabaseWeights>();
             services.AddSingleton<IObjectMappers, ObjectMappers>();
             services.AddScoped<IProfitService, ProfitService>();
             services.AddScoped<IProfitCalculations, ProfitCalculations>();

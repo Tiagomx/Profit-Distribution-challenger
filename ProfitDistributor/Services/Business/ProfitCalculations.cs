@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProfitDistribution.Domain.Models.Profit;
 
 using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Domain.Utils;
 using ProfitDistributor.Services.Interfaces;
-using ProfitDistributorHelper.Services.Repositories;
+
 using ProfitDistritor.Services.Mappers;
 
 namespace ProfitDistributor.Services.Business
 {
     public class ProfitCalculations : IProfitCalculations
     {
-        private readonly IDatabasePeso databaseWeights;
+        private readonly IDatabaseWeights databaseWeights;
         private readonly IObjectMappers objectMappers;
 
-        public ProfitCalculations(IDatabasePeso database, IObjectMappers mappers)
+        public ProfitCalculations(IDatabaseWeights database, IObjectMappers mappers)
         {
             databaseWeights = database;
             objectMappers = mappers;
@@ -27,9 +26,9 @@ namespace ProfitDistributor.Services.Business
         {
             List<EmployeeDistribution> employeeDistributions = new List<EmployeeDistribution>();
 
-            List<PFSModel> pfsList = await databaseWeights.FetchAllPFSAsync();
-            List<PTAModel> ptaList = await databaseWeights.FetchAllPTAAsync();
-            List<PAAModel> paaList = await databaseWeights.FetchAllPAAAsync();
+            List<PFSModel> pfsList = await databaseWeights.GetAllPFSAsync();
+            List<PTAModel> ptaList = await databaseWeights.GetAllPTAAsync();
+            List<PAAModel> paaList = await databaseWeights.GetAllPAAAsync();
             Dictionary<string, decimal> paaDict = paaList.ToDictionary(x => x.Area, x => x.Weight);
 
             funcionarios.ForEach(employee => employeeDistributions.Add(objectMappers.MapEmployeeToEmployeeDistribution(employee, CalculateProfitDistributionForEmployee(employee, pfsList, ptaList, paaDict))));

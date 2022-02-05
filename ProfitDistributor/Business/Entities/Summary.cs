@@ -1,23 +1,24 @@
 using System.Collections.Generic;
+using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 
 namespace ProfitDistributor.Domain.Entities
 {
     public partial class Summary
     {
-        [JsonProperty("participacoes")]
+        [FirestoreProperty]
         public List<EmployeeDistribution> Distributions { get; set; }
 
-        [JsonProperty("total_de_funcionarios")]
+        [FirestoreProperty]
         public string TotalEmployees { get; set; }
 
-        [JsonProperty("total_distribuido")]
+        [FirestoreProperty]
         public string DistributedAmount { get; set; }
 
-        [JsonProperty("total_disponibilizado")]
+        [FirestoreProperty]
         public string AvailableAmount { get; set; }
 
-        [JsonProperty("saldo_total_disponibilizado")]
+        [FirestoreProperty]
         public string DistributionAmountBalance { get; set; }
     }
 }

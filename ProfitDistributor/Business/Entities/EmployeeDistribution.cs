@@ -1,16 +1,17 @@
+using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 
 namespace ProfitDistributor.Domain.Entities
 {
     public partial class EmployeeDistribution
     {
-        [JsonProperty("matricula")]
+        [FirestoreProperty]
         public string RegistrationId { get; set; }
 
-        [JsonProperty("nome")]
+        [FirestoreProperty]
         public string Name { get; set; }
 
-        [JsonProperty("valor_da_participacao")]
+        [FirestoreProperty]
         public string DistributionAmount { get; set; }
     }
 }
