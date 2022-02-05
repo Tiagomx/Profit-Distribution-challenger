@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProfitDistribution.Domain.Models.Profit;
-using ProfitDistribution.Services.Business;
+
 using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Domain.Utils;
+using ProfitDistributor.Services.Interfaces;
 using ProfitDistributorHelper.Services.Repositories;
 using ProfitDistritor.Services.Mappers;
 
-namespace ProfitDistribution.Domain.Services.Business
+namespace ProfitDistributor.Services.Business
 {
     public class ProfitCalculations : IProfitCalculations
     {
@@ -22,26 +23,26 @@ namespace ProfitDistribution.Domain.Services.Business
             objectMappers = mappers;
         }
 
-        public async Task<List<DistribuicaoDeValores>> DistributeProfitForEmployeesAsync(List<Funcionario> employees)
+        public async Task<List<EmployeeDistribution>> DistributeProfitForEmployeesAsync(List<Employee> funcionarios)
         {
-            List<DistribuicaoDeValores> employeeDistributions = new List<DistribuicaoDeValores>();
+            List<EmployeeDistribution> employeeDistributions = new List<EmployeeDistribution>();
 
             List<PFSModel> pfsList = await databaseWeights.FetchAllPFSAsync();
             List<PTAModel> ptaList = await databaseWeights.FetchAllPTAAsync();
             List<PAAModel> paaList = await databaseWeights.FetchAllPAAAsync();
             Dictionary<string, decimal> paaDict = paaList.ToDictionary(x => x.Area, x => x.Weight);
 
-            employees.ForEach(employee => employeeDistributions.Add(objectMappers.MapEmployeeToEmployeeDistribution(employee, CalculateProfitDistributionForEmployee(employee, pfsList, ptaList, paaDict))));
+            funcionarios.ForEach(employee => employeeDistributions.Add(objectMappers.MapEmployeeToEmployeeDistribution(employee, CalculateProfitDistributionForEmployee(employee, pfsList, ptaList, paaDict))));
 
             return employeeDistributions;
         }
 
-        private decimal CalculateProfitDistributionForEmployee(Funcionario employee, List<PFSModel> pfsList, List<PTAModel> ptaList, Dictionary<string, decimal> paaDict)
+        private decimal CalculateProfitDistributionForEmployee(Employee employee, List<PFSModel> pfsList, List<PTAModel> ptaList, Dictionary<string, decimal> paaDict)
         {
-            decimal salary = CurrencyFormatMoneyUtils.SetDecimalFromString(employee.SalarioBruto);
-            String admissionDate = employee.DataAdmissao;
+            decimal salary = CurrencyFormatMoneyUtils.SetDecimalFromString(employee.Salary);
+            String admissionDate = employee.AdmissionDate.ToString();
             string area = employee.Area;
-            string position = employee.Cargo;
+            string position = employee.Position;
 
             return salary * AppConstants.MONTHS_IN_YEAR * GetEquationResult(salary, Convert.ToDateTime(admissionDate), area, position, pfsList, ptaList, paaDict);
         }

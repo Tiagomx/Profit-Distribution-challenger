@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ProfitDistribution.Domain.Services.Business;
-using ProfitDistribution.Services.Business;
+using ProfitDistributor.Services.Business;
 using ProfitDistributor.Services.Interfaces;
 using ProfitDistributorHelper.Services.Application;
 using ProfitDistributorHelper.Services.Repositories;

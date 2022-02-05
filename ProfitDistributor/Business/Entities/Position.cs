@@ -3,7 +3,7 @@
 namespace ProfitDistributor.Domain.Entities
 {
     [FirestoreData]
-    public class Cargo
+    public class Position
     {
         public string NomeCargo { get; set; }
     }

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.0 - Presentation", "1.0 - Presentation", "{F0EB5DC7-27AA-4114-988C-FC25640EB927}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0 - API", "2.0 - API", "{952BA245-1AD8-43D3-8D42-B4F11485D293}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0 - Application", "2.0 - Application", "{952BA245-1AD8-43D3-8D42-B4F11485D293}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.0 - Business", "4.0 - Business", "{6BD1D764-DBAD-4DD1-81A8-AFF6C820DC11}"
 EndProject

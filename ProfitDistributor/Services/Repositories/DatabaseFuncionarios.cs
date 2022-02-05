@@ -16,9 +16,9 @@ namespace ProfitDistributorHelper.Services.Repositories
     {
         private const string ENDPOINT_EMPLOYEES = "/employees.json";
 
-        public async Task<List<Funcionario>> FetchAllFuncionariosAsync()
+        public async Task<List<Employee>> FetchAllFuncionariosAsync()
         {
-            List<Funcionario> funcionarios = new List<Funcionario>();
+            List<Employee> funcionarios = new List<Employee>();
 
             var httpClient = new HttpClient();
 
@@ -26,11 +26,11 @@ namespace ProfitDistributorHelper.Services.Repositories
             {
                 string func = await response.Content.ReadAsStringAsync();
 
-                return JsonConvert.DeserializeObject<List<Funcionario>>(func); ;
+                return JsonConvert.DeserializeObject<List<Employee>>(func);
             }
         }
 
-        public async Task<HttpResponseMessage> PostToFireBaseEmployeesAsync(Funcionario funcionario)
+        public async Task<HttpResponseMessage> PostToFireBaseEmployeesAsync(Employee funcionario)
         {
             var firebase = new FirebaseClient(AppConstants.BASE_URL_DB_FIREBASE + ENDPOINT_EMPLOYEES);
 

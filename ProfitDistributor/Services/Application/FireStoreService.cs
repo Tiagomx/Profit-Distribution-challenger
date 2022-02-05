@@ -1,8 +1,11 @@
 ﻿using Google.Cloud.Firestore;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ProfitDistributor.Domain.Entities;
-
+using ProfitDistributor.Domain.Utils;
 using ProfitDistributor.Services.Interfaces;
+using ProfitDistributorHelper.Services.Repositories;
+using ProfitDistritor.Services.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +13,17 @@ using System.Threading.Tasks;
 
 namespace ProfitDistributor.Application.Data
 {
-    public class FireStoreService : IFuncionarioService
+    public class FireStoreService : IEmployeeService
     {
         private string projectId;
         private FirestoreDb fireStoreDb;
+
+        private const string ERROR_BALANCE = "Saldo insuficiente para distribuição";
+
+        //private readonly IDatabaseEmployees databaseEmployees;
+        private readonly IProfitCalculations profitCalculations;
+
+        private readonly IObjectMappers objectMappers;
 
         public FireStoreService()
         {
@@ -23,28 +33,43 @@ namespace ProfitDistributor.Application.Data
             fireStoreDb = FirestoreDb.Create(projectId);
         }
 
-        public async Task<List<Funcionario>> GetFuncionarios()
+        public async Task<ActionResult<Summary>> GetSummaryForProfitDistributionAsync(decimal totalAmount)
+        {
+            var employees = await GetEmployeesAsync();
+            List<EmployeeDistribution> employeeDistributions = await profitCalculations.DistributeProfitForEmployeesAsync(employees.ToList());
+            decimal totalDistributed = employeeDistributions.Sum(emp => CurrencyFormatMoneyUtils.SetDecimalFromString(emp.DistributionAmount));
+            decimal distributionAmountBalance = decimal.Subtract(totalAmount, totalDistributed);
+
+            if (IsNegative(distributionAmountBalance))
+            {
+                return new BadRequestObjectResult(ERROR_BALANCE);
+            }
+
+            return objectMappers.MapResultToSummary(employeeDistributions, employees.Count.ToString(), totalAmount, totalDistributed, distributionAmountBalance);
+        }
+
+        public async Task<List<Employee>> GetEmployeesAsync()
         {
             try
             {
-                Query FuncionarioQuery = fireStoreDb.Collection("funcionarios");
-                QuerySnapshot FuncionarioQuerySnapshot = await FuncionarioQuery.GetSnapshotAsync();
-                List<Funcionario> listaFuncionario = new List<Funcionario>();
+                Query EmployeeQuery = fireStoreDb.Collection("Employees");
+                QuerySnapshot EmployeeQuerySnapshot = await EmployeeQuery.GetSnapshotAsync();
+                List<Employee> listaEmployee = new List<Employee>();
 
-                foreach (DocumentSnapshot documentSnapshot in FuncionarioQuerySnapshot.Documents)
+                foreach (DocumentSnapshot documentSnapshot in EmployeeQuerySnapshot.Documents)
                 {
                     if (documentSnapshot.Exists)
                     {
                         Dictionary<string, object> city = documentSnapshot.ToDictionary();
                         string json = JsonConvert.SerializeObject(city);
-                        Funcionario novoFuncionario = JsonConvert.DeserializeObject<Funcionario>(json);
-                        novoFuncionario.Id = documentSnapshot.Id;
-                        listaFuncionario.Add(novoFuncionario);
+                        Employee novoEmployee = JsonConvert.DeserializeObject<Employee>(json);
+                        novoEmployee.Id = documentSnapshot.Id;
+                        listaEmployee.Add(novoEmployee);
                     }
                 }
 
-                List<Funcionario> listaFuncionarioOrdenada = listaFuncionario.OrderBy(x => x.Nome).ToList();
-                return listaFuncionarioOrdenada;
+                List<Employee> listaEmployeeOrdenada = listaEmployee.OrderBy(x => x.Name).ToList();
+                return listaEmployeeOrdenada;
             }
             catch (Exception ex)
             {
@@ -53,22 +78,22 @@ namespace ProfitDistributor.Application.Data
             }
         }
 
-        public async Task<Funcionario> GetFuncionarioById(string id)
+        public async Task<Employee> GetEmployeeById(string id)
         {
             try
             {
-                DocumentReference docRef = fireStoreDb.Collection("funcionarios").Document(id);
+                DocumentReference docRef = fireStoreDb.Collection("Employees").Document(id);
                 DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
                 if (snapshot.Exists)
                 {
-                    Funcionario Funcionario = snapshot.ConvertTo<Funcionario>();
-                    Funcionario.Id = snapshot.Id;
-                    return Funcionario;
+                    Employee Employee = snapshot.ConvertTo<Employee>();
+                    Employee.Id = snapshot.Id;
+                    return Employee;
                 }
                 else
                 {
-                    return new Funcionario();
+                    return new Employee();
                 }
             }
             catch
@@ -77,12 +102,12 @@ namespace ProfitDistributor.Application.Data
             }
         }
 
-        public async void AddFuncionario(Funcionario Funcionario)
+        public async void AddEmployee(Employee Employee)
         {
             try
             {
-                CollectionReference colRef = fireStoreDb.Collection("funcionarios");
-                await colRef.AddAsync(Funcionario);
+                CollectionReference colRef = fireStoreDb.Collection("Employees");
+                await colRef.AddAsync(Employee);
             }
             catch
             {
@@ -90,12 +115,12 @@ namespace ProfitDistributor.Application.Data
             }
         }
 
-        public async void UpdateFuncionario(Funcionario Funcionario)
+        public async void UpdateEmployee(Employee Employee)
         {
             try
             {
-                DocumentReference FuncionarioRef = fireStoreDb.Collection("funcionarios").Document(Funcionario.Id);
-                await FuncionarioRef.SetAsync(Funcionario, SetOptions.Overwrite);
+                DocumentReference EmployeeRef = fireStoreDb.Collection("Employees").Document(Employee.RegistrationId);
+                await EmployeeRef.SetAsync(Employee, SetOptions.Overwrite);
             }
             catch
             {
@@ -103,12 +128,12 @@ namespace ProfitDistributor.Application.Data
             }
         }
 
-        public async void DeleteFuncionario(string id)
+        public async void DeleteEmployee(string id)
         {
             try
             {
-                DocumentReference FuncionarioRef = fireStoreDb.Collection("funcionarios").Document(id);
-                await FuncionarioRef.DeleteAsync();
+                DocumentReference EmployeeRef = fireStoreDb.Collection("Employees").Document(id);
+                await EmployeeRef.DeleteAsync();
             }
             catch
             {
@@ -116,30 +141,9 @@ namespace ProfitDistributor.Application.Data
             }
         }
 
-        public async Task<List<Cargo>> GetCargos()
+        private bool IsNegative(decimal distributionAmountBalance)
         {
-            try
-            {
-                Query CargosQuery = fireStoreDb.Collection("cargo");
-                QuerySnapshot CargosQuerySnapshot = await CargosQuery.GetSnapshotAsync();
-                List<Cargo> listaCargos = new List<Cargo>();
-
-                foreach (DocumentSnapshot documentSnapshot in CargosQuerySnapshot.Documents)
-                {
-                    if (documentSnapshot.Exists)
-                    {
-                        Dictionary<string, object> cargo = documentSnapshot.ToDictionary();
-                        string json = JsonConvert.SerializeObject(cargo);
-                        Cargo novoCargo = JsonConvert.DeserializeObject<Cargo>(json);
-                        listaCargos.Add(novoCargo);
-                    }
-                }
-                return listaCargos;
-            }
-            catch
-            {
-                throw;
-            }
+            return distributionAmountBalance.CompareTo(decimal.Zero) < decimal.Zero;
         }
     }
 }

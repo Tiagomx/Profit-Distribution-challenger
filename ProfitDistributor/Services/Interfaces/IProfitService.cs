@@ -11,8 +11,8 @@ namespace ProfitDistributor.Services.Interfaces
     {
         Task<ActionResult<Summary>> GetSummaryForProfitDistributionAsync(decimal totalAmount);
 
-        Task<List<Funcionario>> GetEmployeesAsync();
+        Task<List<Employee>> GetEmployeesAsync();
 
-        Task<HttpResponseMessage> PostEmployeesAsync(Funcionario employee);
+        Task<HttpResponseMessage> PostEmployeesAsync(Employee employee);
     }
 }

@@ -10,8 +10,8 @@ namespace ProfitDistributorHelper.Services.Repositories
     // This interface could be implemented for firebase or Redis Cloud or other database provider.
     public interface IDatabaseFuncionarios
     {
-        Task<List<Funcionario>> FetchAllFuncionariosAsync();
+        Task<List<Employee>> FetchAllFuncionariosAsync();
 
-        Task<HttpResponseMessage> PostToFireBaseEmployeesAsync(Funcionario funcionario);
+        Task<HttpResponseMessage> PostToFireBaseEmployeesAsync(Employee funcionario);
     }
 }

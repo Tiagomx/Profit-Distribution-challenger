@@ -6,8 +6,8 @@ namespace ProfitDistritor.Services.Mappers
 {
     public interface IObjectMappers
     {
-        Summary MapResultToSummary(List<DistribuicaoDeValores> employeeDistributions, string numberOfEmployees, decimal totalAmount, decimal totalDistributed, decimal distributionAmountBalance);
+        Summary MapResultToSummary(List<EmployeeDistribution> employeeDistributions, string numberOfEmployees, decimal totalAmount, decimal totalDistributed, decimal distributionAmountBalance);
 
-        DistribuicaoDeValores MapEmployeeToEmployeeDistribution(Funcionario employee, decimal distributionAmount);
+        EmployeeDistribution MapEmployeeToEmployeeDistribution(Employee employee, decimal distributionAmount);
     }
 }

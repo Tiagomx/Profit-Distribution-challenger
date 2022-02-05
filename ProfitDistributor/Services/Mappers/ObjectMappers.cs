@@ -10,7 +10,7 @@ namespace ProfitDistritor.Services.Mappers
         {
         }
 
-        public Summary MapResultToSummary(List<DistribuicaoDeValores> employeeDistributions, string numberOfEmployees, decimal totalAmount, decimal totalDistributed, decimal distributionAmountBalance)
+        public Summary MapResultToSummary(List<EmployeeDistribution> employeeDistributions, string numberOfEmployees, decimal totalAmount, decimal totalDistributed, decimal distributionAmountBalance)
         {
             return new Summary
             {
@@ -22,13 +22,13 @@ namespace ProfitDistritor.Services.Mappers
             };
         }
 
-        public DistribuicaoDeValores MapEmployeeToEmployeeDistribution(Funcionario employee, decimal distributionAmount)
+        public EmployeeDistribution MapEmployeeToEmployeeDistribution(Employee employee, decimal distributionAmount)
         {
-            return new DistribuicaoDeValores
+            return new EmployeeDistribution
             {
-                Matricula = employee.Id,
-                Nome = employee.Nome,
-                ValorParticipacao = CurrencyFormatMoneyUtils.SetMoneyTextFromDecimal(distributionAmount)
+                RegistrationId = employee.RegistrationId,
+                Name = employee.Name,
+                DistributionAmount = CurrencyFormatMoneyUtils.SetMoneyTextFromDecimal(distributionAmount)
             };
         }
     }

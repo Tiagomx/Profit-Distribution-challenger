@@ -1,12 +1,11 @@
 ﻿using ProfitDistributor.Domain.Entities;
-
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ProfitDistribution.Services.Business
+namespace ProfitDistributor.Services.Interfaces
 {
     public interface IProfitCalculations
     {
-        Task<List<DistribuicaoDeValores>> DistributeProfitForEmployeesAsync(List<Funcionario> employees);
+        Task<List<EmployeeDistribution>> DistributeProfitForEmployeesAsync(List<Employee> funcionarios);
     }
 }

@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Firebase.Database;
 using Microsoft.AspNetCore.Mvc;
-using ProfitDistribution.Services.Business;
+
 using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Domain.Utils;
 using ProfitDistributor.Services.Interfaces;
@@ -35,8 +35,8 @@ namespace ProfitDistributorHelper.Services.Application
         public async Task<ActionResult<Summary>> GetSummaryForProfitDistributionAsync(decimal totalAmount)
         {
             var employees = await GetEmployeesAsync();
-            List<DistribuicaoDeValores> employeeDistributions = await profitCalculations.DistributeProfitForEmployeesAsync(employees.ToList());
-            decimal totalDistributed = employeeDistributions.Sum(emp => CurrencyFormatMoneyUtils.SetDecimalFromString(emp.ValorParticipacao));
+            List<EmployeeDistribution> employeeDistributions = await profitCalculations.DistributeProfitForEmployeesAsync(employees.ToList());
+            decimal totalDistributed = employeeDistributions.Sum(emp => CurrencyFormatMoneyUtils.SetDecimalFromString(emp.DistributionAmount));
             decimal distributionAmountBalance = decimal.Subtract(totalAmount, totalDistributed);
 
             if (IsNegative(distributionAmountBalance))
@@ -47,12 +47,12 @@ namespace ProfitDistributorHelper.Services.Application
             return objectMappers.MapResultToSummary(employeeDistributions, employees.Count.ToString(), totalAmount, totalDistributed, distributionAmountBalance);
         }
 
-        public async Task<List<Funcionario>> GetEmployeesAsync()
+        public async Task<List<Employee>> GetEmployeesAsync()
         {
             return await databaseEmployees.FetchAllFuncionariosAsync();
         }
 
-        public async Task<HttpResponseMessage> PostEmployeesAsync(Funcionario employee)
+        public async Task<HttpResponseMessage> PostEmployeesAsync(Employee employee)
         {
             return await databaseEmployees.PostToFireBaseEmployeesAsync(employee);
         }

@@ -1,12 +1,12 @@
-﻿@page "/Funcionarios"
+﻿@page "/Employee"
 @inject HttpClient _httpClient
 
-<h1>Funcionarios</h1>
+<h2>Cadastro de Funcionários</h2>
 
 <div class="container">
     <div class="row">
         <div class="col-xs-3">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#AddEditFuncionariosModal" @onclick="@AddFuncionarios">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#AddEditEmployeesModal" @onclick="@AddEmployees">
                 <i class="fa fa-user-plus"></i>
             </button>
         </div>
@@ -14,7 +14,7 @@
         <div class="input-group col-md-4 offset-md-5">
             <input type="text" class="form-control" placeholder="Buscar" @bind="@searchString" />
             <div class="input-group-append">
-                <button class="btn btn-info" @onclick="@SearchFuncionarios">
+                <button class="btn btn-info" @onclick="@SearchEmployees">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -23,7 +23,7 @@
 </div>
 
 <br />
-@if (Funcionarios == null)
+@if (Employees == null)
 {
     <p><em>Carregando...</em></p>
 }
@@ -42,23 +42,23 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var Funcionarios in Funcionarios)
+            @foreach (var Employees in Employees)
             {
                 <tr>
-                    <td>@Funcionarios.Matricula</td>
-                    <td>@Funcionarios.Nome</td>
-                    <td>@Funcionarios.Area</td>
-                    <td>@Funcionarios.Cargo</td>
-                    <td>@Funcionarios.SalarioBruto</td>
-                    <td>@Funcionarios.DataAdmissao</td>
+                    <td>@Employees.RegistrationId</td>
+                    <td>@Employees.Name</td>
+                    <td>@Employees.Area</td>
+                    <td>@Employees.Position</td>
+                    <td>@Employees.Salary</td>
+                    <td>@Employees.AdmissionDate</td>
 
                     <td>
-                        <button class="btn btn-outline-dark" data-toggle="modal" data-target="#AddEditFuncionariosModal"
-                                @onclick="@(async () => await EditFuncionarios(@Funcionarios.Id))">
+                        <button class="btn btn-outline-dark" data-toggle="modal" data-target="#AddEditEmployeesModal"
+                                @onclick="@(async () => await EditEmployees(@Employees.Id))">
                             <i class="fa fa-pencil-square-o"></i>
                         </button>
-                        <button class="btn btn-outline-danger" data-toggle="modal" data-target="#DeleteFuncionariosModal"
-                                @onclick="@(async () => await DeleteConfirma(@Funcionarios.Id))">
+                        <button class="btn btn-outline-danger" data-toggle="modal" data-target="#DeleteEmployeesModal"
+                                @onclick="@(async () => await DeleteConfirma(@Employees.Id))">
                             <i class="fa fa-trash-o"></i>
                         </button>
                     </td>
@@ -68,7 +68,7 @@ else
     </table>
 }
 
-<div class="modal fade" id="AddEditFuncionariosModal">
+<div class="modal fade" id="AddEditEmployeesModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -81,15 +81,15 @@ else
                 <form>
                     <div class="form-group">
                         <label class="control-label">Nome</label>
-                        <input class="form-control" @bind="@Funcionario.Nome" />
+                        <input class="form-control" @bind="@Employee.Name" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Matricula</label>
-                        <input class="form-control" @bind="@Funcionario.Matricula" />
+                        <input class="form-control" @bind="@Employee.RegistrationId" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Área</label>
-                        <select class="form-control" @bind="@Funcionario.Area">
+                        <select class="form-control" @bind="@Employee.Area">
                             <option value="">-- Área --</option>
                             <option value="Diretoria">Diretoria</option>
                             <option value="Contabilidade">Contabilidade</option>
@@ -100,38 +100,36 @@ else
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Salário Bruto</label>
-                        <input class="form-control" @bind="@Funcionario.SalarioBruto" />
-                    </div>
-                    <div class="form-group">
                         <label class="control-label">Cargo</label>
-                        <select class="form-control" @bind="@Funcionario.Cargo">
-                            <option value="-- Cargo --">-- Cargo --</option>
-                            @foreach (var Cargo in Cargos)
-                            {
-                                <option value="@Cargo.NomeCargo">@Cargo.NomeCargo</option>
-
-                            }
+                        <select class="form-control" @bind="@Employee.Position">
+                            <option value="">-- Cargo --</option>
+                            <option value="Funcionario">Funcionário</option>
+                            <option value="Estagiario">Estagiário</option>
                         </select>
                     </div>
                     <div class="form-group">
+                        <label class="control-label">Salário Bruto</label>
+                        <input class="form-control" @bind="@Employee.Salary" />
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label">Data de Admissão</label>
-                        <input type="datetime" class="form-control" placeholder="yyyy-mm-dd" @bind="@Funcionario.DataAdmissao" />
-                        @*<InputDate @bind-Value="@Funcionario.DataAdmissao" />*@
+                        <input type="datetime" class="form-control" placeholder="yyyy-mm-dd" @bind="@Employee.AdmissionDate" />
+                        @*<InputDate @bind-Value="@Employee.DataAdmissao" />*@
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-block btn-success"
-                        @onclick="@(async () => await SaveFuncionarios())" data-dismiss="modal">
+                        @onclick="@(async () => await SaveEmployees())" data-dismiss="modal">
                     Salvar
                 </button>
             </div>
         </div>
     </div>
 </div>
-@*------------------Deletar Funcionarios -------------------*@
-<div class="modal fade" id="DeleteFuncionariosModal">
+@*------------------Deletar Employees -------------------*@
+<div class="modal fade" id="DeleteEmployeesModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -144,25 +142,25 @@ else
                 <table class="table">
                     <tr>
                         <td>Nome</td>
-                        <td>@Funcionario.Matricula</td>
+                        <td>@Employee.RegistrationId</td>
                     </tr>
                     <tr>
                         <td>Sexo</td>
-                        <td>@Funcionario.Nome</td>
+                        <td>@Employee.Name</td>
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td>@Funcionario.Area</td>
+                        <td>@Employee.Area</td>
                     </tr>
                     <tr>
                         <td>Cargo</td>
-                        <td>@Funcionario.Cargo</td>
+                        <td>@Employee.Position</td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-danger" data-dismiss="modal"
-                        @onclick="@(async () => await DeleteFuncionarios(@Funcionario.Id))">
+                        @onclick="@(async () => await DeleteEmployees(@Employee.RegistrationId))">
                     Deletar
                 </button>
                 <button data-dismiss="modal" class="btn">Cancelar</button>
@@ -172,72 +170,66 @@ else
 </div>
 @*------------fim-----------------*@
 @code{
-    protected List<Funcionario> Funcionarios = new List<Funcionario>();
-    protected List<Cargo> Cargos = new List<Cargo>();
-    protected Funcionario Funcionario = new Funcionario();
+    protected List<Employee> Employees = new List<Employee>();
+
+    protected Employee Employee = new Employee();
 
     protected string tituloModal { get; set; }
     protected string searchString { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-
-        await GetListaFuncionarios();
-        await GetListaCargos();
+        await GetListaEmployees();
     }
 
-    protected async Task<List<Funcionario>> GetListaFuncionarios()
+    protected async Task<List<Employee>> GetListaEmployees()
     {
-        Funcionarios = await _httpClient.GetFromJsonAsync<List<Funcionario>>("api/Funcionarios");
-        return Funcionarios;
-    }
-    protected async Task GetListaCargos()
-    {
-        Cargos = await _httpClient.GetFromJsonAsync<List<Cargo>>("api/Funcionarios/GetCargos");
+        Employees = await _httpClient.GetFromJsonAsync<List<Employee>>("api/Employee");
+        return Employees;
     }
 
-    protected void AddFuncionarios()
+    protected void AddEmployees()
     {
-        Funcionario = new Funcionario();
-        tituloModal = "Incluir Funcionarios";
+        Employee = new Employee();
+        tituloModal = "Incluir Employees";
     }
 
-    protected async Task SearchFuncionarios()
+    protected async Task SearchEmployees()
     {
-        await GetListaFuncionarios();
+        await GetListaEmployees();
 
         if (searchString != "")
         {
-            Funcionarios = Funcionarios.Where(
-            x => x.Nome.IndexOf(searchString,
+            Employees = Employees.Where(
+            x => x.Name.IndexOf(searchString,
             StringComparison.OrdinalIgnoreCase) != -1).ToList();
         }
     }
-    protected async Task EditFuncionarios(string FuncionariosId)
+    protected async Task EditEmployees(string EmployeesId)
     {
-        Funcionario = await _httpClient.GetFromJsonAsync<Funcionario>("/api/Funcionarios/" + FuncionariosId);
-        tituloModal = "Editar Funcionarios";
+        Employee = await _httpClient.GetFromJsonAsync<Employee>("/api/Employee/" + EmployeesId);
+        tituloModal = "Editar Employees";
     }
-    protected async Task SaveFuncionarios()
+    protected async Task SaveEmployees()
     {
-        if (Funcionario.Id != null)
+        if (Employee.RegistrationId != null)
         {
-            await _httpClient.PutAsJsonAsync("api/Funcionarios/", Funcionario);
+            await _httpClient.PutAsJsonAsync("api/Employee/", Employee);
         }
         else
         {
-            await _httpClient.PostAsJsonAsync("/api/Funcionarios/", Funcionario);
+            await _httpClient.PostAsJsonAsync("/api/Employee/", Employee);
         }
-        await GetListaFuncionarios();
+        await GetListaEmployees();
     }
-    protected async Task DeleteConfirma(string FuncionariosId)
+    protected async Task DeleteConfirma(string EmployeesId)
     {
-        Funcionario = await _httpClient.GetFromJsonAsync<Funcionario>("/api/Funcionarios/" + FuncionariosId);
+        Employee = await _httpClient.GetFromJsonAsync<Employee>("/api/Employee/" + EmployeesId);
     }
-    protected async Task DeleteFuncionarios(string FuncionariosId)
+    protected async Task DeleteEmployees(string EmployeesId)
     {
-        Console.WriteLine(FuncionariosId);
-        await _httpClient.DeleteAsync("api/Funcionarios/" + FuncionariosId);
-        await GetListaFuncionarios();
+        Console.WriteLine(EmployeesId);
+        await _httpClient.DeleteAsync("api/Employee/" + EmployeesId);
+        await GetListaEmployees();
     }
 }

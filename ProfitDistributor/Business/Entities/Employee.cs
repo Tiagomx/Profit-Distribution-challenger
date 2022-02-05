@@ -4,26 +4,26 @@ using System;
 namespace ProfitDistributor.Domain.Entities
 {
     [FirestoreData]
-    public class Funcionario
+    public class Employee
     {
         public string Id { get; set; }
 
         [FirestoreProperty]
-        public string Matricula { get; set; }
+        public string RegistrationId { get; set; }
 
         [FirestoreProperty]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [FirestoreProperty]
         public string Area { get; set; }
 
         [FirestoreProperty]
-        public string Cargo { get; set; }
+        public string Position { get; set; }
 
         [FirestoreProperty]
-        public string SalarioBruto { get; set; }
+        public string Salary { get; set; }
 
         [FirestoreProperty]
-        public string DataAdmissao { get; set; }
+        public string AdmissionDate { get; set; }
     }
 }
