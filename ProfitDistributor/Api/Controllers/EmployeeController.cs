@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 
 namespace ProfitDistributor.Api.Controllers
 {
@@ -12,19 +11,10 @@ namespace ProfitDistributor.Api.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employee;
-        private readonly IProfitService _profitService;
 
-        public EmployeeController(IEmployeeService Employee, IProfitService profitService)
+        public EmployeeController(IEmployeeService Employee)
         {
             _employee = Employee;
-            _profitService = profitService;
-        }
-
-        [HttpGet]
-        [Route("Profit")]
-        public Task<ActionResult<Summary>> CalculateProfitGetAsync([FromQuery] decimal totalAmount)
-        {
-            return _profitService.GetSummaryForProfitDistributionAsync(totalAmount);
         }
 
         [HttpGet]

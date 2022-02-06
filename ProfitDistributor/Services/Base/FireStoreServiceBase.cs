@@ -1,5 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 using System;
+using System.IO;
 
 namespace ProfitDistributor.Services.Base
 {
@@ -10,7 +11,9 @@ namespace ProfitDistributor.Services.Base
 
         public FireStoreServiceBase()
         {
-            string filepath = @"C:\Users\tiago.teixeira\source\repos\ProfitDistributor\ProfitDistributor\Api\FireStoreKey\profitapp-34fab-8d750f4e4856.json";
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string filepath = Path.Combine(currentDirectory, "FireStoreKey", "profitapp-34fab-8d750f4e4856.json");
+
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", filepath);
             projectId = "profitapp-34fab";
             fireStoreDb = FirestoreDb.Create(projectId);

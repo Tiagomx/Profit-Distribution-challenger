@@ -83,7 +83,7 @@ namespace ProfitDistributor.Services.Application
         {
             try
             {
-                DocumentReference EmployeeRef = fireStoreDb.Collection("Employees").Document(Employee.RegistrationId);
+                DocumentReference EmployeeRef = fireStoreDb.Collection("Employees").Document(Employee.Id);
                 await EmployeeRef.SetAsync(Employee, SetOptions.Overwrite);
             }
             catch

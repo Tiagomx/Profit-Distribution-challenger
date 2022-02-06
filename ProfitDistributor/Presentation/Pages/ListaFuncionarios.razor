@@ -5,8 +5,10 @@
 
 <div class="container">
     <div class="row">
+
         <div class="input-group col-md-4 offset-md-5">
-            <input type="number" class="form-control" placeholder="Insira um valor válido" @bind="@totalAmount" />
+            <label class="control-label">Ex:1600000</label>
+            <input type="text" class="form-control" placeholder="Buscar" @bind="@totalAmount" />
             <div class="input-group-append">
                 <button class="btn btn-primary"
                         @onclick="@(async () => await ProfitCalculation())">
@@ -159,7 +161,7 @@ else
             </div>
             <div class="modal-footer">
                 <button class="btn btn-danger" data-dismiss="modal"
-                        @onclick="@(async () => await DeleteEmployees(@Employee.RegistrationId))">
+                        @onclick="@(async () => await DeleteEmployees(@Employee.Id))">
                     Deletar
                 </button>
                 <button data-dismiss="modal" class="btn">Cancelar</button>
@@ -254,7 +256,7 @@ else
 
         try
         {
-            EmpDistribution = await _httpClient.GetFromJsonAsync<Summary>("api/Employee/Profit?totalAmount=" + totalAmount);
+            EmpDistribution = await _httpClient.GetFromJsonAsync<Summary>("api/Profit/Calculate?totalAmount=" + totalAmount);
             return EmpDistribution;
         }
         catch (Exception)
@@ -289,7 +291,7 @@ else
     }
     protected async Task SaveEmployees()
     {
-        if (Employee.RegistrationId != null)
+        if (Employee.Id != null)
         {
             await _httpClient.PutAsJsonAsync("api/Employee/", Employee);
         }
@@ -305,7 +307,6 @@ else
     }
     protected async Task DeleteEmployees(string EmployeesId)
     {
-        Console.WriteLine(EmployeesId);
         await _httpClient.DeleteAsync("api/Employee/" + EmployeesId);
         await GetEmployeesList();
     }
