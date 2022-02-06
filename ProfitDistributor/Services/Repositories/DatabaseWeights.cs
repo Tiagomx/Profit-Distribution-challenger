@@ -25,8 +25,8 @@ namespace ProfitDistributor.Services.Repositories
                 {
                     if (documentSnapshot.Exists)
                     {
-                        Dictionary<string, object> city = documentSnapshot.ToDictionary();
-                        string json = JsonConvert.SerializeObject(city);
+                        Dictionary<string, object> pta = documentSnapshot.ToDictionary();
+                        string json = JsonConvert.SerializeObject(pta);
                         PTAModel novoPTA = JsonConvert.DeserializeObject<PTAModel>(json);
                         novoPTA.Id = documentSnapshot.Id;
                         listPTA.Add(novoPTA);
@@ -55,8 +55,8 @@ namespace ProfitDistributor.Services.Repositories
                 {
                     if (documentSnapshot.Exists)
                     {
-                        Dictionary<string, object> city = documentSnapshot.ToDictionary();
-                        string json = JsonConvert.SerializeObject(city);
+                        Dictionary<string, object> pfs = documentSnapshot.ToDictionary();
+                        string json = JsonConvert.SerializeObject(pfs);
                         PFSModel novoPFS = JsonConvert.DeserializeObject<PFSModel>(json);
                         novoPFS.Id = documentSnapshot.Id;
                         listPFS.Add(novoPFS);
@@ -85,8 +85,8 @@ namespace ProfitDistributor.Services.Repositories
                 {
                     if (documentSnapshot.Exists)
                     {
-                        Dictionary<string, object> city = documentSnapshot.ToDictionary();
-                        string json = JsonConvert.SerializeObject(city);
+                        Dictionary<string, object> paa = documentSnapshot.ToDictionary();
+                        string json = JsonConvert.SerializeObject(paa);
                         PAAModel novoPAA = JsonConvert.DeserializeObject<PAAModel>(json);
                         novoPAA.Id = documentSnapshot.Id;
                         listPAA.Add(novoPAA);

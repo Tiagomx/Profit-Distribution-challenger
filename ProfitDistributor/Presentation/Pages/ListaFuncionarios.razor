@@ -5,19 +5,19 @@
 
 <div class="container">
     <div class="row">
+        <div class="input-group col-md-4 offset-md-5">
+            <input type="number" class="form-control" placeholder="Insira um valor válido" @bind="@totalAmount" />
+            <div class="input-group-append">
+                <button class="btn btn-primary"
+                        @onclick="@(async () => await ProfitCalculation())">
+                    <i class="fa fa-calculator" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
         <div class="col-xs-3">
             <button class="btn btn-primary" data-toggle="modal" data-target="#AddEditEmployeesModal" @onclick="@AddEmployees">
                 <i class="fa fa-user-plus"></i>
             </button>
-        </div>
-
-        <div class="input-group col-md-4 offset-md-5">
-            <input type="text" class="form-control" placeholder="Buscar" @bind="@searchString" />
-            <div class="input-group-append">
-                <button class="btn btn-info" @onclick="@SearchEmployees">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
         </div>
     </div>
 </div>
@@ -58,7 +58,7 @@ else
                             <i class="fa fa-pencil-square-o"></i>
                         </button>
                         <button class="btn btn-outline-danger" data-toggle="modal" data-target="#DeleteEmployeesModal"
-                                @onclick="@(async () => await DeleteConfirma(@Employees.Id))">
+                                @onclick="@(async () => await Delete(@Employees.Id))">
                             <i class="fa fa-trash-o"></i>
                         </button>
                     </td>
@@ -115,7 +115,6 @@ else
                     <div class="form-group">
                         <label class="control-label">Data de Admissão</label>
                         <input type="datetime" class="form-control" placeholder="yyyy-mm-dd" @bind="@Employee.AdmissionDate" />
-                        @*<InputDate @bind-Value="@Employee.DataAdmissao" />*@
                     </div>
                 </form>
             </div>
@@ -168,21 +167,110 @@ else
         </div>
     </div>
 </div>
+
+@if (EmpDistribution == null)
+{
+    <p><em>Não há dados...</em></p>
+}
+else
+{
+    if (EmpDistribution.Distributions != null)
+    {
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>Matricula</th>
+                    <th>Nome</th>
+                    <th>Valor Distribuído</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employeeDistribution in EmpDistribution.Distributions)
+                {
+                    <tr>
+                        <td>@employeeDistribution.RegistrationId</td>
+                        <td>@employeeDistribution.Name</td>
+                        <td>@employeeDistribution.DistributionAmount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="container">
+            <div class="form-group">
+                <label class="control-label">Total Funcionários</label>
+                <label class="control-label">@EmpDistribution.TotalEmployees</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Total Distribuido</label>
+                <label class="control-label">@EmpDistribution.DistributedAmount</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Total Disponibilizado</label>
+                <label class="control-label">@EmpDistribution.AvailableAmount</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Saldo Total Disponibilizado</label>
+                <label class="control-label">@EmpDistribution.DistributionAmountBalance</label>
+            </div>
+        </div>
+    }
+    else
+    {
+
+        <div class="container">
+            <div class="form-group">
+                <label class="control-label">Total Funcionários</label>
+                <label class="control-label">@EmpDistribution.TotalEmployees</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Total Distribuido</label>
+                <label class="control-label">@EmpDistribution.DistributedAmount</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Total Disponibilizado</label>
+                <label class="control-label">@EmpDistribution.AvailableAmount</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Saldo Total Disponibilizado</label>
+                <label class="control-label">@EmpDistribution.DistributionAmountBalance</label>
+            </div>
+        </div>
+    }
+
+}
+
 @*------------fim-----------------*@
 @code{
     protected List<Employee> Employees = new List<Employee>();
-
     protected Employee Employee = new Employee();
-
     protected string tituloModal { get; set; }
     protected string searchString { get; set; }
+    protected Summary EmpDistribution = new Summary();
+    protected decimal totalAmount { get; set; }
+
+    protected async Task<Summary> ProfitCalculation()
+    {
+
+        try
+        {
+            EmpDistribution = await _httpClient.GetFromJsonAsync<Summary>("api/Employee/Profit?totalAmount=" + totalAmount);
+            return EmpDistribution;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        await GetListaEmployees();
+        await GetEmployeesList();
     }
 
-    protected async Task<List<Employee>> GetListaEmployees()
+    protected async Task<List<Employee>> GetEmployeesList()
     {
         Employees = await _httpClient.GetFromJsonAsync<List<Employee>>("api/Employee");
         return Employees;
@@ -191,24 +279,13 @@ else
     protected void AddEmployees()
     {
         Employee = new Employee();
-        tituloModal = "Incluir Employees";
+        tituloModal = "Incluir Funcionário";
     }
 
-    protected async Task SearchEmployees()
-    {
-        await GetListaEmployees();
-
-        if (searchString != "")
-        {
-            Employees = Employees.Where(
-            x => x.Name.IndexOf(searchString,
-            StringComparison.OrdinalIgnoreCase) != -1).ToList();
-        }
-    }
     protected async Task EditEmployees(string EmployeesId)
     {
         Employee = await _httpClient.GetFromJsonAsync<Employee>("/api/Employee/" + EmployeesId);
-        tituloModal = "Editar Employees";
+        tituloModal = "Editar Funcionário";
     }
     protected async Task SaveEmployees()
     {
@@ -220,9 +297,9 @@ else
         {
             await _httpClient.PostAsJsonAsync("/api/Employee/", Employee);
         }
-        await GetListaEmployees();
+        await GetEmployeesList();
     }
-    protected async Task DeleteConfirma(string EmployeesId)
+    protected async Task Delete(string EmployeesId)
     {
         Employee = await _httpClient.GetFromJsonAsync<Employee>("/api/Employee/" + EmployeesId);
     }
@@ -230,6 +307,6 @@ else
     {
         Console.WriteLine(EmployeesId);
         await _httpClient.DeleteAsync("api/Employee/" + EmployeesId);
-        await GetListaEmployees();
+        await GetEmployeesList();
     }
 }

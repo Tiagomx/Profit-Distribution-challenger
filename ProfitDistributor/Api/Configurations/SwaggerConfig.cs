@@ -11,7 +11,7 @@ namespace ProfitDistributor.API.Configurations
                 config.PostProcess = document =>
                 {
                     document.Info.Version = "1.0.0";
-                    document.Info.Title = "Profit Distribution Helper - API";
+                    document.Info.Title = "Profit Distribution Tool - API";
                     document.Info.Description = "Profit distribution system among company employees";
                     document.Info.Contact = new NSwag.OpenApiContact
                     {

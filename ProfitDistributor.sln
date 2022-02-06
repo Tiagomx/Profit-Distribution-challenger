@@ -7,13 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.0 - Presentation", "1.0 -
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0 - Application", "2.0 - Application", "{9A19103F-16F7-4668-BE54-9A1E7A4F7556}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.0 - Domain", "4.0 - Domain", "{6BD1D764-DBAD-4DD1-81A8-AFF6C820DC11}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.0 - Domain", "3.0 - Domain", "{6BD1D764-DBAD-4DD1-81A8-AFF6C820DC11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitDistributor.Domain", "ProfitDistributor\Business\ProfitDistributor.Domain.csproj", "{F7C529FA-4ECC-4926-BF23-0142D17CB2A5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitDistributor.Ui", "ProfitDistributor\Presentation\ProfitDistributor.Ui.csproj", "{7092FAFC-6331-44FA-B0E7-FFA919E64F23}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.0 - Services", "3.0 - Services", "{94241813-2BDA-4149-BB08-2E2BD0111D14}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfitDistributor.Services", "ProfitDistributor\Services\ProfitDistributor.Services.csproj", "{A9ABAD80-43A5-4F70-82BB-C578F02D65BB}"
 EndProject
@@ -48,7 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F7C529FA-4ECC-4926-BF23-0142D17CB2A5} = {6BD1D764-DBAD-4DD1-81A8-AFF6C820DC11}
 		{7092FAFC-6331-44FA-B0E7-FFA919E64F23} = {F0EB5DC7-27AA-4114-988C-FC25640EB927}
-		{A9ABAD80-43A5-4F70-82BB-C578F02D65BB} = {94241813-2BDA-4149-BB08-2E2BD0111D14}
+		{A9ABAD80-43A5-4F70-82BB-C578F02D65BB} = {9A19103F-16F7-4668-BE54-9A1E7A4F7556}
 		{081629F3-C125-4401-A088-9EEE278ABD31} = {9A19103F-16F7-4668-BE54-9A1E7A4F7556}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
