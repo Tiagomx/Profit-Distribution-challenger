@@ -9,7 +9,7 @@ using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Services.Interfaces;
 using Xunit;
 
-namespace ProfitDistribution.Tests.Controllers
+namespace ProfitDistributor.Tests.Controllers
 {
     public class ProfitControllerTests
     {

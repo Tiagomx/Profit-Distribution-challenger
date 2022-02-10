@@ -6,7 +6,7 @@ using ProfitDistributor.Services.Business;
 using ProfitDistributor.Services.Interfaces;
 using Xunit;
 
-namespace ProfitDistributior.Tests.Domain.Services
+namespace ProfitDistributor.Tests.Domain.Services
 {
     public class ProfitCalculationTests
     {
@@ -31,7 +31,7 @@ namespace ProfitDistributior.Tests.Domain.Services
 
             var profitCalculation = new ProfitCalculations(mockDbWeights.Object, mockMapper.Object);
             var result = profitCalculation
-                .GetEquationResult(2000, DateTime.Parse("2020-01-01"), area, "Economista", pfsModels, ptaModels, dict);
+                .GetEquationResult(2000, DateTime.Parse("2020-01-01"), area, "Funcionario", pfsModels, ptaModels, dict);
 
             Assert.Equal(5, result);
         }
