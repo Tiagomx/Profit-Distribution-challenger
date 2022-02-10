@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using ProfitDistributor.Domain.Entities;
 using ProfitDistributor.Domain.Utils;
 using ProfitDistributor.Services.Interfaces;
-
-using ProfitDistritor.Services.Mappers;
 
 namespace ProfitDistributor.Services.Business
 {
