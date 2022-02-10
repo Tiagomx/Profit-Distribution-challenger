@@ -11,7 +11,7 @@ using Xunit;
 
 namespace ProfitDistributor.Tests.Controllers
 {
-    public class ProfitControllerTests
+    public class ProfitControllerTests : ProfitControllerTestsBase
     {
         [Fact]
         public async Task ProfitControllerTest_GetSummary()
@@ -52,31 +52,6 @@ namespace ProfitDistributor.Tests.Controllers
                 DistributedAmount = "R$ 33.324,00",
                 AvailableAmount = "R$ 35.000,00",
                 DistributionAmountBalance = "R$ 1.676,00"
-            };
-        }
-
-        private List<Employee> GetListOfEmployeesMock()
-        {
-            return new List<Employee>
-            {
-                new Employee
-                {
-                    RegistrationId = "12345",
-                    Name = "John Doe",
-                    Area = "Diretoria",
-                    Position = "Diretor Financeiro",
-                    Salary = "R$ 1.234,00",
-                    AdmissionDate = DateTime.Parse("2010-08-05").ToString()
-                },
-                new Employee
-                {
-                    RegistrationId = "67890",
-                    Name = "Jane Smith",
-                    Area = "Financeiro",
-                    Position = "Economista Chefe",
-                    Salary = "R$ 1.543,00",
-                    AdmissionDate = DateTime.Parse("2009-08-05").ToString()
-                },
             };
         }
     }
