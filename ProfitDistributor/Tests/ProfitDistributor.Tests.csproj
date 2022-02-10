@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -22,8 +22,8 @@
     <Folder Include="Domain\Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProfitDistributor\Application\ProfitDistributor.Api.csproj" />
-    <ProjectReference Include="..\ProfitDistributor\Business\ProfitDistributor.Domain.csproj" />
-    <ProjectReference Include="..\ProfitDistributor\Services\ProfitDistributor.Services.csproj" />
+    <ProjectReference Include="..\Application\ProfitDistributor.Api.csproj" />
+    <ProjectReference Include="..\Business\ProfitDistributor.Domain.csproj" />
+    <ProjectReference Include="..\Services\ProfitDistributor.Services.csproj" />
   </ItemGroup>
 </Project>
