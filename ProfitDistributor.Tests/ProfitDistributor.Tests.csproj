@@ -22,7 +22,7 @@
     <Folder Include="Domain\Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProfitDistributor\Api\ProfitDistributor.Api.csproj" />
+    <ProjectReference Include="..\ProfitDistributor\Application\ProfitDistributor.Api.csproj" />
     <ProjectReference Include="..\ProfitDistributor\Business\ProfitDistributor.Domain.csproj" />
     <ProjectReference Include="..\ProfitDistributor\Services\ProfitDistributor.Services.csproj" />
   </ItemGroup>
