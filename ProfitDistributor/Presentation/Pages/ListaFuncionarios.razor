@@ -97,8 +97,8 @@ else
                             <option value="Contabilidade">Contabilidade</option>
                             <option value="Financeiro">Financeiro</option>
                             <option value="Tecnologia">Tecnologia</option>
-                            <option value="Tecnologia">Serviços Gerais</option>
-                            <option value="Tecnologia">Relacionamento com o Cliente</option>
+                            <option value="Serviços Gerais">Serviços Gerais</option>
+                            <option value="Relacionamento com o Cliente">Relacionamento com o Cliente</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -254,16 +254,9 @@ else
     protected async Task<Summary> ProfitCalculation()
     {
 
-        try
-        {
-            EmpDistribution = await _httpClient.GetFromJsonAsync<Summary>("api/Profit/Calculate?totalAmount=" + totalAmount);
-            return EmpDistribution;
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
+        EmpDistribution = await _httpClient.GetFromJsonAsync<Summary>("api/Profit/Calculate?totalAmount=" + totalAmount);
+        await GetEmployeesList();
+        return EmpDistribution;
 
     }
 
@@ -274,6 +267,7 @@ else
 
     protected async Task<List<Employee>> GetEmployeesList()
     {
+        Employees.Clear();
         Employees = await _httpClient.GetFromJsonAsync<List<Employee>>("api/Employee");
         return Employees;
     }
