@@ -10,7 +10,7 @@ using Xunit;
 
 namespace ProfitDistributor.Tests.Controllers
 {
-    public class EmployeeControllerTests
+    public class EmployeeControllerTests : ProfitControllerTestsBase
     {
         [Fact]
         public async Task EmployeeControllerTest_GetEmployees()
@@ -24,31 +24,6 @@ namespace ProfitDistributor.Tests.Controllers
             var result = await controller.Get();
 
             Assert.Equal(2, result.Count);
-        }
-
-        private List<Employee> GetListOfEmployeesMock()
-        {
-            return new List<Employee>
-            {
-                new Employee
-                {
-                    RegistrationId = "12345",
-                    Name = "John Doe",
-                    Area = "Diretoria",
-                    Position = "Funcionario",
-                    Salary = "R$ 1.234,00",
-                    AdmissionDate = DateTime.Parse("2010-08-05").ToString()
-                },
-                new Employee
-                {
-                    RegistrationId = "67890",
-                    Name = "Jane Smith",
-                    Area = "Financeiro",
-                    Position = "Funcionario",
-                    Salary = "R$ 1.543,00",
-                    AdmissionDate = DateTime.Parse("2009-08-05").ToString()
-                },
-            };
         }
     }
 }
