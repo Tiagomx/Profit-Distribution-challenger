@@ -4,10 +4,12 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ProfitDistributor.Domain</AssemblyName>
     <RootNamespace>ProfitDistributor.Domain</RootNamespace>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Cloud.Firestore" Version="2.5.0" />
+ 
   </ItemGroup>
 
 </Project>
