@@ -253,11 +253,9 @@ else
 
     protected async Task<Summary> ProfitCalculation()
     {
-
         EmpDistribution = await _httpClient.GetFromJsonAsync<Summary>("api/Profit/Calculate?totalAmount=" + totalAmount);
         await GetEmployeesList();
         return EmpDistribution;
-
     }
 
     protected override async Task OnInitializedAsync()
